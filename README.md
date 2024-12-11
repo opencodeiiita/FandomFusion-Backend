@@ -63,7 +63,7 @@ To bring this fandom experience to life, you’ll need **npm** or **yarn** insta
 4. Navigate into the project directory:
 
    ```bash
-   cd FandomFusion
+   cd FandomFusion-backend
    ```
 
 5. Install all necessary dependencies:
@@ -106,6 +106,7 @@ To bring this fandom experience to life, you’ll need **npm** or **yarn** insta
 ├── CONTRIBUTORS.md
 ├── package.json
 ├── package-lock.json
+├──.env.example
 ├── README.md
 └── src
     ├── config
