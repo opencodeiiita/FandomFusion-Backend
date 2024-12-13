@@ -4,16 +4,16 @@ Welcome to **FandomFusion** – your gateway to exploring, curating, and sharing
 
 ## 📚 Table of Contents
 
--   [Features](#🌐-features)
--   [Tech Stack](#⚡-tech-stack)
--   [Dependencies](#📦-dependencies)
--   [How To Setup](#🛠️-how-to-setup)
--   [Reference Links](#🔗-reference-links)
--   [Directory Structure](#📁-directory-structure)
--   [Claim an Issue](#👆-claim-an-issue)
--   [Communication](#💻-communication)
--   [Contribution Guidelines](#📋-contribution-guidelines)
--   [Mentors](#🤝-mentors)
+-   [Features](#-features)
+-   [Tech Stack](#-tech-stack)
+-   [Dependencies](#-dependencies)
+-   [How To Setup](#-how-to-setup)
+-   [Reference Links](#-reference-links)
+-   [Directory Structure](#-directory-structure)
+-   [Claim an Issue](#-claim-an-issue)
+-   [Communication](#-communication)
+-   [Contribution Guidelines](#-contribution-guidelines)
+-   [Mentors](#-mentors)
 
 ## 🌐 Features
 
