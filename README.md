@@ -7,7 +7,7 @@ Welcome to **FandomFusion** – your gateway to exploring, curating, and sharing
 -   [Features](#-features)
 -   [Tech Stack](#-tech-stack)
 -   [Dependencies](#-dependencies)
--   [How To Setup](#-how-to-setup)
+-   [How To Setup](#️-how-to-setup)
 -   [Reference Links](#-reference-links)
 -   [Directory Structure](#-directory-structure)
 -   [Claim an Issue](#-claim-an-issue)
@@ -139,6 +139,7 @@ We’re passionate about fostering a friendly and welcoming environment for all 
 -   **Show, don’t just tell**: Screenshots or short videos can make reviews smoother.
 -   **Avoid duplicate PRs**: If necessary, comment on the older PR with the follow-up PR number and close the obsolete one.
 -   **Three-day rule**: PRs inactive for more than three days may be closed.
+-   Make sure you have [Prettier](https://prettier.io/) installed, can be installed as an extension in most IDEs and Code Editors.
 
 Let’s create something amazing together. 🌟
 
@@ -147,7 +148,7 @@ Let’s create something amazing together. 🌟
 1.  **Arpit Anand**  
     _Opencode Bot Wizard and Anime Enthusiast_  
     `GitHub:` [Buddha-11](https://github.com/Buddha-11)  
-    `Discord:` Buddha__  
+    `Discord:` buddha__  
 
 ## 💪 Thanks To All Contributors
 
