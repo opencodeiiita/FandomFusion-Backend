@@ -115,6 +115,12 @@ To bring this fandom experience to life, you’ll need **npm** or **yarn** insta
     ├── middlewares
     ├── routes
     └── utils
+    └── models
+        ├── anime.model.js
+        ├── game.model.js
+        └── list.model.js
+        └── movie.model.js
+        └── user.model.js
 
 ```
 > [!NOTE]
