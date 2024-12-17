@@ -37,13 +37,17 @@ An error response from the server will look like this:
 
 **Success Response:**
 - **Status Code:** `200 OK`
-- **Response Headers:**
-  - `auth-token`: JWT_TOKEN_STRING
 - **Response Body:**
   ```json
   {
     "status": "Ok",
-    "message": "User logged successfully."
+    "message": "User logged successfully.",
+    "user": {
+      "id": "",
+      "username":"",
+      "email": "",
+      "token": ""
+    }
   }
   ```
 
@@ -78,6 +82,3 @@ An error response from the server will look like this:
        "error": "UpdateInfo failed check console for error"
      }
      ```
-
-**Notes:**
-- The JWT token is sent in the `auth-token` header

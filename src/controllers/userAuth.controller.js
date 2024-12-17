@@ -60,7 +60,16 @@ const UserAuthController = {
       }
 
       const token = jwt.sign({ userID:user._id,userName:user.username }, process.env.JWT_SECRET);
-      res.status(200).header("auth-token", token).json({ status: "Ok", message: "User logged successfully." });
+      res.status(200).json({
+        status: "Ok",
+        message: "User logged successfully.",
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          token: token
+        }
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ status: "error", error: "UpdateInfo failed check console for error" });
