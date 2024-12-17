@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 const UserAuthController = {
   register: async (req, res) => {
@@ -35,6 +36,31 @@ const UserAuthController = {
       await user.save()
 
       res.status(201).json({ status: "Ok", message: "Welcome to the FandomFusion Realm! Your identity has been secured. Start creating and sharing your lists today!" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: "error", error: "UpdateInfo failed check console for error" });
+    }
+  },
+  login: async (req, res) => {
+    try {
+      const { username, password } = req.body;
+
+      if(!username || !password){
+        return res.status(400).json({status: "error", error: "Insufficient data. Make sure to include username and password."})
+      }
+
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(400).json({ status: "error", error: "Invalid username or password." });
+      }
+
+      const validPassword = await bcrypt.compare(password, user.password);
+      if (!validPassword) {
+        return res.status(400).json({ status: "error", error: "Invalid username or password." });
+      }
+
+      const token = jwt.sign({ userID:user._id,userName:user.username }, process.env.JWT_SECRET);
+      res.status(200).header("auth-token", token).json({ status: "Ok", message: "User logged successfully." });
     } catch (error) {
       console.error(error);
       res.status(500).json({ status: "error", error: "UpdateInfo failed check console for error" });
