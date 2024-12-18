@@ -5,7 +5,8 @@ import mongoose from "mongoose";
 import dbURL from "./src/config/db.config.js";
 
 import userAuthRoutes from "./src/routes/v1/userAuth.routes.js";
-import testRoutes from "./src/routes/test.routes.js";
+import userRoutes from "./src/routes/v1/user.routes.js";
+import testRoutes from "./src/routes/v1/test.routes.js";
 
 dotenv.config();
 const app = express();
@@ -14,7 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api/v1/auth/", userAuthRoutes);
-app.use("/api/test", testRoutes);
+app.use("/api/v1/test", testRoutes);
+app.use("/api/v1/user", userRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World");
