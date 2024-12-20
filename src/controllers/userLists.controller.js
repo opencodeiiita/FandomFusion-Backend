@@ -1,11 +1,9 @@
-const AnimeList = require('../models/AnimeList.model');
-const GameList = require('../models/GameList.model');
-const MovieList = require('../models/MovieList.model');
-const Anime = require('../models/Anime.model');
-const Game = require('../models/Game.model');
-const Movie = require('../models/Movie.model');
+import { AnimeList, GameList, MovieList } from '../models/list.model.js';
+import Anime from '../models/Anime.model.js';
+import Game from '../models/Game.model.js';
+import Movie from '../models/Movie.model.js';
 
-exports.addAnimeToList = async (req, res) => {
+export const addAnimeToList = async (req, res) => {
     const { publicDbId, status, rating } = req.body;
     const userId = req.user.id;
 
@@ -36,7 +34,7 @@ exports.addAnimeToList = async (req, res) => {
     }
 };
 
-exports.addGameToList = async (req, res) => {
+export const addGameToList = async (req, res) => {
     const { publicDbId, status, rating } = req.body;
     const userId = req.user.id;
 
@@ -67,7 +65,7 @@ exports.addGameToList = async (req, res) => {
     }
 };
 
-exports.addMovieToList = async (req, res) => {
+export const addMovieToList = async (req, res) => {
     const { publicDbId, status, rating } = req.body;
     const userId = req.user.id;
 

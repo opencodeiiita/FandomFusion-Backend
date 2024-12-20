@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userListsController = require('../../controllers/userLists.controllers');
-const authenticate = require('../../middlewares/authenticate'); 
+import userAuthMiddleware from '../../middlewares/userAuth.middleware.js';
+import { addAnimeToList, addGameToList, addMovieToList } from '../../controllers/userLists.controller.js';
 
-router.post('/lists/anime', authenticate, userListsController.addAnimeToList);
-router.post('/lists/games', authenticate, userListsController.addGameToList);
-router.post('/lists/movies', authenticate, userListsController.addMovieToList);
+router.post('/anime/add', userAuthMiddleware, addAnimeToList);
+router.post('/games/add', userAuthMiddleware, addGameToList);
+router.post('/movies/add',userAuthMiddleware, addMovieToList);
 
-module.exports = router;
+export default router;
