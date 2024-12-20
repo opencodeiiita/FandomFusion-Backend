@@ -7,6 +7,7 @@ import dbURL from "./src/config/db.config.js";
 import userAuthRoutes from "./src/routes/v1/userAuth.routes.js";
 import userRoutes from "./src/routes/v1/user.routes.js";
 import testRoutes from "./src/routes/v1/test.routes.js";
+import userListsRoutes from "./src/routes/v1/userLists.routes.js";
 
 dotenv.config();
 const app = express();
@@ -17,10 +18,12 @@ app.use(cors());
 app.use("/api/v1/auth/", userAuthRoutes);
 app.use("/api/v1/test", testRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/lists", userListsRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World");
 });
+
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
