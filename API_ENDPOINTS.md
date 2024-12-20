@@ -203,114 +203,119 @@ An error response from the server will look like this:
      }
      ```
 
-Add Anime to List
-Endpoint: /api/v1/lists/anime/add
-Method: POST
-Request Body:
-json
-Copy code
-{
-  "publicDbId": "string",
-  "status": "string",
-  "rating": "number"
-}
-Success Response:
+### Anime List EndPoints
 
-Status Code: 201 Created
-Response Body:
-json
-Copy code
-{
-  "status": "OK",
-  "message": "Anime added successfully to the list.",
-  "data": {
+- **Endpoint:** `/api/v1/lists/anime/add`
+- **Method:** `POST`
+- **Request Body:** 
+  ```json
+    {
     "publicDbId": "string",
     "status": "string",
     "rating": "number"
-  }
-}
-Error Responses:
+    }
+    ```
+**Success Response:**
+- **Status Code:** `201 created`
+- **Response Body:**
+  ```json
+    {
+    "status": "OK",
+    "message": "Anime added successfully to the list.",
+    "data": {
+        "publicDbId": "string",
+        "status": "string",
+        "rating": "number"
+    }
+    }
+  ```
 
-Anime Already Exists in the List:
-Status Code: 400 Bad Request
-Response Body:
-json
-Copy code
-{
-  "status": "error",
-  "error": "Anime already exists in the list."
-}
-Add Game to List
-Endpoint: /api/v1/lists/games/add
-Method: POST
-Request Body:
-json
-Copy code
-{
-  "publicDbId": "string",
-  "status": "string",
-  "rating": "number"
-}
-Success Response:
+**Error Responses:**
 
-Status Code: 201 Created
-Response Body:
-json
-Copy code
-{
-  "status": "OK",
-  "message": "Game added successfully to the list.",
-  "data": {
+ **Anime Already Exists in the List:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+    "status": "error",
+    "error": "Anime already exists in the list."
+    }
+     ```
+
+### Game List EndPoints
+
+- **Endpoint:** `/api/v1/lists/games/add`
+- **Method:** `POST`
+- **Request Body:** 
+  ```json
+    {
     "publicDbId": "string",
     "status": "string",
     "rating": "number"
-  }
-}
-Error Responses:
+    }
+    ```
+**Success Response:**
+- **Status Code:** `201 created`
+- **Response Body:**
+  ```json
+    {
+    "status": "OK",
+    "message": "Game added successfully to the list.",
+    "data": {
+        "publicDbId": "string",
+        "status": "string",
+        "rating": "number"
+    }
+    }
+  ```
 
-Game Already Exists in the List:
-Status Code: 400 Bad Request
-Response Body:
-json
-Copy code
-{
-  "status": "error",
-  "error": "Game already exists in the list."
-}
-Add Movie to List
-Endpoint: /api/v1/lists/movies/add
-Method: POST
-Request Body:
-json
-Copy code
-{
-  "publicDbId": "string",
-  "status": "string",
-  "rating": "number"
-}
-Success Response:
+**Error Responses:**
 
-Status Code: 201 Created
-Response Body:
-json
-Copy code
-{
-  "status": "OK",
-  "message": "Movie added successfully to the list.",
-  "data": {
+ **Game Already Exists in the List:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+    "status": "error",
+    "error": "Game already exists in the list."
+    }
+     ```
+
+### Movie List EndPoints
+
+- **Endpoint:** `/api/v1/lists/movies/add`
+- **Method:** `POST`
+- **Request Body:** 
+  ```json
+    {
     "publicDbId": "string",
     "status": "string",
     "rating": "number"
-  }
-}
-Error Responses:
+    }
+    ```
+**Success Response:**
+- **Status Code:** `201 created`
+- **Response Body:**
+  ```json
+    {
+    "status": "OK",
+    "message": "Movie added successfully to the list.",
+    "data": {
+        "publicDbId": "string",
+        "status": "string",
+        "rating": "number"
+    }
+    }
+  ```
 
-Movie Already Exists in the List:
-Status Code: 400 Bad Request
-Response Body:
-json
-Copy code
-{
-  "status": "error",
-  "error": "Movie already exists in the list."
-}
+**Error Responses:**
+
+ **Movie Already Exists in the List:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+    "status": "error",
+    "error": "Movie already exists in the list."
+    }
+     ```
