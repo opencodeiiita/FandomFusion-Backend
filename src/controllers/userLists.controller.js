@@ -25,13 +25,10 @@ export const addAnimeToList = async (req, res) => {
         const animeExists = await Anime.findOne({ _id: { $in: animeList.animeEntries }, publicDbId });
         if (animeExists) {
             return res.status(400).json({ message: 'Anime already exists in the list.' });
-        }
+        } 
 
-        let anime = await Anime.findOne({ publicDbId });
-        if (!anime) {
-            anime = new Anime({ publicDbId, status, rating });
-            await anime.save();
-        }
+        let anime = new Anime({ publicDbId, status, rating });
+        await anime.save();
 
         animeList.animeEntries.push(anime._id);
         await animeList.save();
@@ -65,11 +62,8 @@ export const addGameToList = async (req, res) => {
             return res.status(400).json({ message: 'Game already exists in the list.' });
         }
 
-        let game = await Game.findOne({ publicDbId });
-        if (!game) {
-            game = new Game({ publicDbId, status, rating });
-            await game.save();
-        }
+        let game = new Game({ publicDbId, status, rating });
+        await game.save();
 
         gameList.gameEntries.push(game._id);
         await gameList.save();
@@ -103,11 +97,8 @@ export const addMovieToList = async (req, res) => {
             return res.status(400).json({ message: 'Movie already exists in the list.' });
         }
 
-        let movie = await Movie.findOne({ publicDbId });
-        if (!movie) {
-            movie = new Movie({ publicDbId, status, rating });
-            await movie.save();
-        }
+        let movie = new Movie({ publicDbId, status, rating });
+        await movie.save();
 
         movieList.movieEntries.push(movie._id);
         await movieList.save();
