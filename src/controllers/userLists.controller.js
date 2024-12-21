@@ -302,13 +302,7 @@ export const updateGameInList = async (req, res) => {
       );
       await userAnimeList.save();
   
-      // Check if the anime is referenced by any other AnimeList
-      const isAnimeReferenced = await AnimeList.exists({ animeEntries: animeId });
-  
-      // If not referenced, delete it from the database
-      if (!isAnimeReferenced) {
-        await Anime.findByIdAndDelete(animeId);
-      }
+      await Anime.findByIdAndDelete(animeId);
   
       // Respond with success
       res.status(200).json({
@@ -348,14 +342,8 @@ export const removeGameFromList = async (req, res) => {
       );
       await userGameList.save();
   
-      // Check if the game is referenced by any other GameList
-      const isGameReferenced = await GameList.exists({ gameEntries: gameId });
-  
-      // If not referenced, delete it from the database
-      if (!isGameReferenced) {
-        await Game.findByIdAndDelete(gameId);
-      }
-  
+      await Game.findByIdAndDelete(gameId);
+
       // Respond with success
       res.status(200).json({
         message: 'Game removed successfully.',
@@ -394,14 +382,8 @@ export const removeMovieFromList = async (req, res) => {
     );
     await userMovieList.save();
 
-    // Check if the movie is referenced by any other MovieList
-    const isMovieReferenced = await MovieList.exists({ movieEntries: movieId });
-
-    // If not referenced, delete it from the database
-    if (!isMovieReferenced) {
-      await Movie.findByIdAndDelete(movieId);
-    }
-
+    await Movie.findByIdAndDelete(movieId);
+    
     // Respond with success
     res.status(200).json({
       message: 'Movie removed successfully.',
