@@ -242,6 +242,85 @@ An error response from the server will look like this:
     }
      ```
 
+- **Endpoint:** `/api/v1/lists/anime/update/:id`
+- **Method:** `PATCH`
+- **Request Body:** 
+  ```json
+    {
+    "status": "string",
+    "rating": "number"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+    {
+      "message": "Anime updated successfully.",
+      "data": {
+          "_id": "ObjectId",
+          "publicDbId": "string",
+          "status": "string",
+          "rating": "number",
+          "__v": 0
+      }
+    }
+  ```
+
+**Error Responses:**
+
+ **Anime not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Invalid anime ID."
+    }
+     ```
+
+  **Invalid status value:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Invalid status value"
+    }
+     ```
+
+  **Invalid rating:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Rating must be a number between 0 and 10"
+    }
+     ```
+
+- **Endpoint:** `/api/v1/lists/anime/remove/:id`
+- **Method:** `DELETE`
+- **Request Body:** `None`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+    {
+      "message": "Anime removed successfully."
+    }
+  ```
+
+**Error Responses:**
+
+ **Anime not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Anime not found in your list."
+    }
+     ```
+
+
 ### Game List EndPoints
 
 - **Endpoint:** `/api/v1/lists/games/add`
@@ -281,6 +360,84 @@ An error response from the server will look like this:
     }
      ```
 
+- **Endpoint:** `/api/v1/lists/games/update/:id`
+- **Method:** `PATCH`
+- **Request Body:** 
+  ```json
+    {
+    "status": "string",
+    "rating": "number"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+    {
+      "message": "Game updated successfully.",
+      "data": {
+          "_id": "ObjectId",
+          "publicDbId": "string",
+          "status": "string",
+          "rating": "number",
+          "__v": 0
+      }
+    }
+  ```
+
+**Error Responses:**
+
+ **Game not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Invalid game ID."
+    }
+     ```
+
+  **Invalid status value:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Invalid status value"
+    }
+     ```
+
+  **Invalid rating:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Rating must be a number between 0 and 10"
+    }
+     ```
+
+- **Endpoint:** `/api/v1/lists/games/remove/:id`
+- **Method:** `DELETE`
+- **Request Body:** `None`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+    {
+      "message": "Game removed successfully."
+    }
+  ```
+
+**Error Responses:**
+
+ **Game not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Game not found in your list."
+    }
+     ```
+
 ### Movie List EndPoints
 
 - **Endpoint:** `/api/v1/lists/movies/add`
@@ -317,5 +474,83 @@ An error response from the server will look like this:
      {
     "status": "error",
     "error": "Movie already exists in the list."
+    }
+     ```
+
+- **Endpoint:** `/api/v1/lists/movies/update/:id`
+- **Method:** `PATCH`
+- **Request Body:** 
+  ```json
+    {
+    "status": "string",
+    "rating": "number"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+    {
+      "message": "Movie updated successfully.",
+      "data": {
+          "_id": "ObjectId",
+          "publicDbId": "string",
+          "status": "string",
+          "rating": "number",
+          "__v": 0
+      }
+    }
+  ```
+
+**Error Responses:**
+
+ **Movie not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Invalid movie ID."
+    }
+     ```
+
+  **Invalid status value:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Invalid status value"
+    }
+     ```
+
+  **Invalid rating:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Rating must be a number between 0 and 10"
+    }
+     ```
+
+- **Endpoint:** `/api/v1/lists/movies/remove/:id`
+- **Method:** `DELETE`
+- **Request Body:** `None`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+    {
+      "message": "Movie removed successfully."
+    }
+  ```
+
+**Error Responses:**
+
+ **Movie not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+    {
+      "error": "Movie not found in your list."
     }
      ```
