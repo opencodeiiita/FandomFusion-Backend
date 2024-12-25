@@ -1,7 +1,7 @@
 import { AnimeList, GameList, MovieList } from '../models/list.model.js';
-import Anime from '../models/Anime.model.js';
-import Game from '../models/Game.model.js';
-import Movie from '../models/Movie.model.js';
+import Anime from '../models/anime.model.js';
+import Game from '../models/game.model.js';
+import Movie from '../models/movie.model.js';
 import User from '../models/user.model.js';
 import mongoose from 'mongoose';
 
