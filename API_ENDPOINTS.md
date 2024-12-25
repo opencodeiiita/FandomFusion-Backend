@@ -271,7 +271,7 @@ An error response from the server will look like this:
 
 ## Anime List EndPoints
 
-### Add Anime list
+### Add Anime
 
 - **Endpoint:** `/api/v1/lists/anime/add`
 - **Method:** `POST`
@@ -311,7 +311,7 @@ An error response from the server will look like this:
     }
     ```
 
-### Update Anime list
+### Update Anime
 
 - **Endpoint:** `/api/v1/lists/anime/update/:id`
 - **Method:** `PATCH`
@@ -368,7 +368,7 @@ An error response from the server will look like this:
     }
     ```
 
-### Remove Anime List
+### Remove Anime
 
 - **Endpoint:** `/api/v1/lists/anime/remove/:id`
 - **Method:** `DELETE`
