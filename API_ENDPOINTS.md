@@ -23,6 +23,71 @@ An error response from the server will look like this:
 
 ## Authentication Endpoints
 
+### User Registration
+
+- **Endpoint:** `/api/v1/auth/register`
+- **Method:** `POST`
+- **Request Body:**
+  ```json
+  {
+    "username": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
+
+**Success Response:**
+- **Status Code:** `201 Created`
+- **Response Body:**
+  ```json
+  {
+    "status": "Ok",
+    "message": "Welcome to the FandomFusion Realm! Your identity has been secured. Start creating and sharing your lists today!"
+  }
+  ```
+
+**Error Responses:**
+
+1. **Insufficient Data:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+        "status": "error",
+        "error": "Insufficient data. Make sure to include username, email and password."
+     }
+     ```
+
+2. **Email already used:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+        "status": "error",
+        "error": "A user with that email is already registered."
+     }
+     ```
+    
+3. **Username already used:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+        "status": "error",
+        "error": "Given username is already used."
+     }
+     ```
+
+4. **Server Error:**
+   - **Status Code:** `500 Internal Server Error`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "UpdateInfo failed check console for error"
+     }
+     ```
+
 ### User Login
 
 - **Endpoint:** `/api/v1/auth/login`
@@ -82,6 +147,7 @@ An error response from the server will look like this:
        "error": "UpdateInfo failed check console for error"
      }
      ```
+
 ## User Profile Endpoints
 
 ### Get Data
@@ -203,54 +269,60 @@ An error response from the server will look like this:
      }
      ```
 
-### Anime List EndPoints
+## Anime List EndPoints
+
+### Add Anime list
 
 - **Endpoint:** `/api/v1/lists/anime/add`
 - **Method:** `POST`
 - **Request Body:** 
   ```json
     {
-    "publicDbId": "string",
-    "status": "string",
-    "rating": "number"
+      "publicDbId": "string",
+      "status": "string",
+      "rating": "number"
     }
     ```
+
 **Success Response:**
 - **Status Code:** `201 created`
 - **Response Body:**
   ```json
     {
-    "status": "OK",
-    "message": "Anime added successfully to the list.",
-    "data": {
-        "publicDbId": "string",
-        "status": "string",
-        "rating": "number"
-    }
+      "status": "OK",
+      "message": "Anime added successfully to the list.",
+      "data": {
+          "publicDbId": "string",
+          "status": "string",
+          "rating": "number"
+      }
     }
   ```
 
 **Error Responses:**
 
- **Anime Already Exists in the List:**
+1. **Anime Already Exists in the List:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
-     {
-    "status": "error",
-    "error": "Anime already exists in the list."
+    ```json
+    {
+      "status": "error",
+      "error": "Anime already exists in the list."
     }
-     ```
+    ```
+
+### Update Anime list
 
 - **Endpoint:** `/api/v1/lists/anime/update/:id`
 - **Method:** `PATCH`
 - **Request Body:** 
   ```json
     {
-    "status": "string",
-    "rating": "number"
+      "status": "string",
+      "rating": "number"
     }
-    ```
+  ```
+
 **Success Response:**
 - **Status Code:** `200 OK`
 - **Response Body:**
@@ -269,32 +341,34 @@ An error response from the server will look like this:
 
 **Error Responses:**
 
- **Anime not found:**
+1. **Anime not found:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Invalid anime ID."
     }
-     ```
+    ```
 
-  **Invalid status value:**
+2. **Invalid status value:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Invalid status value"
     }
-     ```
+    ```
 
-  **Invalid rating:**
+3. **Invalid rating:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Rating must be a number between 0 and 10"
     }
-     ```
+    ```
+
+### Remove Anime List
 
 - **Endpoint:** `/api/v1/lists/anime/remove/:id`
 - **Method:** `DELETE`
@@ -311,26 +385,28 @@ An error response from the server will look like this:
 
 **Error Responses:**
 
- **Anime not found:**
-   - **Status Code:** `400 Bad Request`
-   - **Response Body:**
-     ```json
+1. **Anime not found:**
+  - **Status Code:** `400 Bad Request`
+  - **Response Body:**
+    ```json
     {
       "error": "Anime not found in your list."
     }
-     ```
+    ```
 
 
-### Game List EndPoints
+## Game List EndPoints
+
+### Add Game
 
 - **Endpoint:** `/api/v1/lists/games/add`
 - **Method:** `POST`
 - **Request Body:** 
   ```json
     {
-    "publicDbId": "string",
-    "status": "string",
-    "rating": "number"
+      "publicDbId": "string",
+      "status": "string",
+      "rating": "number"
     }
     ```
 **Success Response:**
@@ -338,37 +414,38 @@ An error response from the server will look like this:
 - **Response Body:**
   ```json
     {
-    "status": "OK",
-    "message": "Game added successfully to the list.",
-    "data": {
-        "publicDbId": "string",
-        "status": "string",
-        "rating": "number"
-    }
+      "status": "OK",
+      "message": "Game added successfully to the list.",
+      "data": {
+          "publicDbId": "string",
+          "status": "string",
+          "rating": "number"
+      }
     }
   ```
 
 **Error Responses:**
 
- **Game Already Exists in the List:**
+1. **Game Already Exists in the List:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
      ```json
      {
-    "status": "error",
-    "error": "Game already exists in the list."
-    }
+      "status": "error",
+      "error": "Game already exists in the list."
+     }
      ```
+### Update Game
 
 - **Endpoint:** `/api/v1/lists/games/update/:id`
 - **Method:** `PATCH`
 - **Request Body:** 
   ```json
-    {
+  {
     "status": "string",
     "rating": "number"
-    }
-    ```
+  }
+  ```
 **Success Response:**
 - **Status Code:** `200 OK`
 - **Response Body:**
@@ -387,32 +464,34 @@ An error response from the server will look like this:
 
 **Error Responses:**
 
- **Game not found:**
+1. **Game not found:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Invalid game ID."
     }
-     ```
+    ```
 
-  **Invalid status value:**
+2. **Invalid status value:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Invalid status value"
     }
-     ```
+    ```
 
-  **Invalid rating:**
+3. **Invalid rating:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Rating must be a number between 0 and 10"
     }
-     ```
+    ```
+
+### Remove Game
 
 - **Endpoint:** `/api/v1/lists/games/remove/:id`
 - **Method:** `DELETE`
@@ -429,107 +508,114 @@ An error response from the server will look like this:
 
 **Error Responses:**
 
- **Game not found:**
+1. **Game not found:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Game not found in your list."
     }
-     ```
+    ```
 
-### Movie List EndPoints
+## Movie List EndPoints
+
+### Add Movie
 
 - **Endpoint:** `/api/v1/lists/movies/add`
 - **Method:** `POST`
 - **Request Body:** 
   ```json
-    {
+  {
     "publicDbId": "string",
     "status": "string",
     "rating": "number"
-    }
-    ```
+  }
+  ```
+
 **Success Response:**
 - **Status Code:** `201 created`
 - **Response Body:**
   ```json
     {
-    "status": "OK",
-    "message": "Movie added successfully to the list.",
-    "data": {
-        "publicDbId": "string",
-        "status": "string",
-        "rating": "number"
-    }
-    }
-  ```
-
-**Error Responses:**
-
- **Movie Already Exists in the List:**
-   - **Status Code:** `400 Bad Request`
-   - **Response Body:**
-     ```json
-     {
-    "status": "error",
-    "error": "Movie already exists in the list."
-    }
-     ```
-
-- **Endpoint:** `/api/v1/lists/movies/update/:id`
-- **Method:** `PATCH`
-- **Request Body:** 
-  ```json
-    {
-    "status": "string",
-    "rating": "number"
-    }
-    ```
-**Success Response:**
-- **Status Code:** `200 OK`
-- **Response Body:**
-  ```json
-    {
-      "message": "Movie updated successfully.",
+      "status": "OK",
+      "message": "Movie added successfully to the list.",
       "data": {
-          "_id": "ObjectId",
           "publicDbId": "string",
           "status": "string",
-          "rating": "number",
-          "__v": 0
+          "rating": "number"
       }
     }
   ```
 
 **Error Responses:**
 
- **Movie not found:**
+1. **Movie Already Exists in the List:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
      ```json
+     {
+      "status": "error",
+      "error": "Movie already exists in the list."
+     }
+     ```
+
+### Update Movie
+
+- **Endpoint:** `/api/v1/lists/movies/update/:id`
+- **Method:** `PATCH`
+- **Request Body:** 
+  ```json
+  {
+    "status": "string",
+    "rating": "number"
+  }
+  ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Movie updated successfully.",
+    "data": {
+        "_id": "ObjectId",
+        "publicDbId": "string",
+        "status": "string",
+        "rating": "number",
+        "__v": 0
+    }
+  }
+  ```
+
+**Error Responses:**
+
+1. **Movie not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+    ```json
     {
       "error": "Invalid movie ID."
     }
-     ```
+    ```
 
-  **Invalid status value:**
+2. **Invalid status value:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Invalid status value"
     }
-     ```
+    ```
 
-  **Invalid rating:**
+3. **Invalid rating:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Rating must be a number between 0 and 10"
     }
-     ```
+    ```
+
+### Remove Movie
 
 - **Endpoint:** `/api/v1/lists/movies/remove/:id`
 - **Method:** `DELETE`
@@ -539,21 +625,21 @@ An error response from the server will look like this:
 - **Status Code:** `200 OK`
 - **Response Body:**
   ```json
-    {
-      "message": "Movie removed successfully."
-    }
+  {
+    "message": "Movie removed successfully."
+  }
   ```
 
 **Error Responses:**
 
- **Movie not found:**
+1. **Movie not found:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
+    ```json
     {
       "error": "Movie not found in your list."
     }
-     ```
+    ```
 
 ## Media EndPoints
 
@@ -589,35 +675,35 @@ An error response from the server will look like this:
 
 **Error Responses:**
 
- **Query string/q parameter not provided or empty:**
+1. **Query string/q parameter not provided or empty:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
-     ```json
-     {
+    ```json
+    {
       "error": "Query parameter `q` is required."
-     }
-     ```
+    }
+    ```
 
- **Invalid or malformed query string:**
+2. **Invalid or malformed query string:**
    - **Status Code:** `400 Bad Request`
    - **Response Body:**
      ```json
-     {
+      {
         "error": "Game already exists in the list.",
         "details": "response from JIKAN API",
-     }
+      }
      ```
 
-  **User not authenticated**
+3. **User not authenticated**
    - **Status Code:** `401 Bad Request`
    - **Response Body:** `See User Authentication`
 
-  **Internal error or Invalid response from JIKAN api:**
+4. **Internal error or Invalid response from JIKAN api:**
    - **Status Code:** `500 Bad Request`
    - **Response Body:**
       ```json
       {
-          "error": "Failed to fetch data from Jikan API",
-          "details": "error details/fetch response"
+        "error": "Failed to fetch data from Jikan API",
+        "details": "error details/fetch response"
       }
      ```
