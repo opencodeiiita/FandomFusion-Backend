@@ -554,3 +554,70 @@ An error response from the server will look like this:
       "error": "Movie not found in your list."
     }
      ```
+
+## Media EndPoints
+
+### Search Anime
+- **Endpoint:** `/api/v1/media/anime/search?q={query_string}`
+- **Method:** `GET`
+- **Request Body:** `Not Required` 
+- **Authentication:** `Required` 
+
+**Success Response:**
+  - **Status Code:** `200 Ok`
+  - **Response Body:**
+    ```json
+    {
+      "data": [
+        {
+          "publicDbId": 38000,
+          "imageUrl": "https://cdn.myanimelist.net/images/anime/1286/99889l.jpg",
+          "title_english": "Demon Slayer: Kimetsu no Yaiba",
+          "title_japanese": "鬼滅の刃",
+          "episodes": 26,
+          "status": "Finished Airing",
+          "score": 8.45,
+          "synopsis": "Ever since the death of his father...",
+          "rated": "R - 17+ (violence & profanity)",
+          "season": "spring",
+          "year": 2019,
+          "type": "anime"
+        }
+      ]
+    }
+    ```
+
+**Error Responses:**
+
+ **Query string/q parameter not provided or empty:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+      "error": "Query parameter `q` is required."
+     }
+     ```
+
+ **Invalid or malformed query string:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+        "error": "Game already exists in the list.",
+        "details": "response from JIKAN API",
+     }
+     ```
+
+  **User not authenticated**
+   - **Status Code:** `401 Bad Request`
+   - **Response Body:** `See User Authentication`
+
+  **Internal error or Invalid response from JIKAN api:**
+   - **Status Code:** `500 Bad Request`
+   - **Response Body:**
+      ```json
+      {
+          "error": "Failed to fetch data from Jikan API",
+          "details": "error details/fetch response"
+      }
+     ```
