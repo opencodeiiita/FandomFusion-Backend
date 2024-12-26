@@ -708,10 +708,8 @@ An error response from the server will look like this:
       }
      ```
 
-## Anime EndPoints
-
 ### Get Anime List
-- **Endpoint:** `/api/v1/anime/list`
+- **Endpoint:** `/api/v1/list/anime`
 - **Method:** `GET`
 - **Request Body:** `Not Required` 
 - **Authentication:** `Required` 
@@ -765,7 +763,8 @@ An error response from the server will look like this:
    - **Response Body:**
     ```json
     {
-      "error": "An error occurred while fetching the anime list."
+      "message": "An error occurred while fetching the anime list.",
+      "error": "Request failed with status code 404"
     }
     ```
 

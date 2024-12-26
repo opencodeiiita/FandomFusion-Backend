@@ -9,7 +9,6 @@ import userRoutes from "./src/routes/v1/user.routes.js";
 import testRoutes from "./src/routes/v1/test.routes.js";
 import userListsRoutes from "./src/routes/v1/userLists.routes.js";
 import mediaRoutes from "./src/routes/v1/media.routes.js";
-import animeRoutes from "./src/routes/v1/animeList.routes.js";
 
 dotenv.config();
 const app = express();
@@ -21,7 +20,6 @@ app.use("/api/v1/auth/", userAuthRoutes);
 app.use("/api/v1/test", testRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/lists", userListsRoutes);
-app.use("/api/v1/anime", animeRoutes);
 app.use("/api/v1/media", mediaRoutes);
 
 app.get("/", (req, res) => {

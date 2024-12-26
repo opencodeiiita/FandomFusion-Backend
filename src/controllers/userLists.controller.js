@@ -439,7 +439,9 @@ export const getAnimeList = async (req, res) => {
         //Return the enriched and formatted data
         return res.status(200).json({ animeList: enrichedAnimeList });
     } catch (error) {
-        console.error("Error in getAnimeList:", error.message);
-        return res.status(500).json({ error: "An error occurred while fetching the anime list." });
+        return res.status(500).json({ 
+            message: "An error occurred while fetching the anime list.",
+            error: error.message
+         });
     }
 };

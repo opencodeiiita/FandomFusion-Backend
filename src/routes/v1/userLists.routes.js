@@ -9,6 +9,7 @@ import {
     removeAnimeFromList,
     removeGameFromList,
     removeMovieFromList,
+    getAnimeList
   } from '../../controllers/userLists.controller.js';
 
 router.post('/anime/add', userAuthMiddleware, addAnimeToList);
@@ -25,5 +26,8 @@ router.patch('/movies/update/:id', userAuthMiddleware, updateMovieInList);
 router.delete('/anime/remove/:id', userAuthMiddleware, removeAnimeFromList);
 router.delete('/games/remove/:id', userAuthMiddleware, removeGameFromList);
 router.delete('/movies/remove/:id', userAuthMiddleware, removeMovieFromList);
+
+//Get anime list of a user
+router.get('/anime', userAuthMiddleware, getAnimeList);
 
 export default router;
