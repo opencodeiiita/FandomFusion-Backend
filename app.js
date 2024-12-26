@@ -20,7 +20,6 @@ app.use("/api/v1/auth/", userAuthRoutes);
 app.use("/api/v1/test", testRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/lists", userListsRoutes);
-
 app.use("/api/v1/media", mediaRoutes);
 
 app.get("/", (req, res) => {

@@ -14,3 +14,22 @@ export const formatAnimeResponse = (response) => {
         type: 'anime',
     }));
 };
+
+export const formatAnimeListResponse = (response, userEntry) => {
+    return {
+        publicDbId: response.mal_id,
+        imageUrl: response.images.jpg.large_image_url,
+        title_english: response.title_english,
+        title_japanese: response.title_japanese,
+        episodes: response.episodes,
+        status: response.status,
+        score: response.score,
+        synopsis: response.synopsis,
+        rated: response.rating,
+        season: response.season,
+        year: response.year,
+        type: 'anime',
+        userStatus: userEntry.status, // Added user-defined status
+        userRating: userEntry.rating, // Added user-defined rating
+    };
+};
