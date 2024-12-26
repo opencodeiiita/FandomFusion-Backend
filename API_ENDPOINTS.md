@@ -707,3 +707,82 @@ An error response from the server will look like this:
         "details": "error details/fetch response"
       }
      ```
+
+## Anime EndPoints
+
+### Get Anime List
+- **Endpoint:** `/api/v1/anime/list`
+- **Method:** `GET`
+- **Request Body:** `Not Required` 
+- **Authentication:** `Required` 
+
+**Success Response:**
+  - **Status Code:** `200 Ok`
+  - **Response Body:**
+    ```json
+    {
+        "animeList": [
+            {
+                "publicDbId": 38000,
+                "imageUrl": "https://cdn.myanimelist.net/images/anime/1286/99889l.jpg",
+                "title_english": "Demon Slayer: Kimetsu no Yaiba",
+                "title_japanese": "鬼滅の刃",
+                "episodes": 26,
+                "status": "Finished Airing",
+                "score": 8.45,
+                "synopsis": "<---Text-->",
+                "rated": "R - 17+ (violence & profanity)",
+                "season": "spring",
+                "year": 2019,
+                "type": "anime",
+                "userStatus": "Completed",
+                "userRating": 9
+            },
+            {
+                "publicDbId": 459,
+                "imageUrl": "https://cdn.myanimelist.net/images/anime/1770/97704l.jpg",
+                "title_english": "One Piece: The Movie",
+                "title_japanese": "ONE PIECE",
+                "episodes": 1,
+                "status": "Finished Airing",
+                "score": 7.09,
+                "synopsis": "<--Text-->",
+                "rated": "PG-13 - Teens 13 or older",
+                "season": null,
+                "year": null,
+                "type": "anime",
+                "userStatus": "Watching",
+                "userRating": 8
+            }
+        ]
+    }
+    ```
+
+**Error Responses:**
+
+1. **Invalid anime in list:**
+   - **Status Code:** `500 Internal server error`
+   - **Response Body:**
+    ```json
+    {
+      "error": "An error occurred while fetching the anime list."
+    }
+    ```
+
+2. **No anime list exists for user:**
+   - **Status Code:** `404 Not found`
+   - **Response Body:**
+    ```json
+    {
+      "error": "No anime list found for this user."
+    }
+    ```
+
+3. **User not authenticated**
+   - **Status Code:** `401 Unauthorized`
+   - **Response Body:**
+      ```json
+      {
+        "message": "Unauthorized: Invalid or expired token"
+      }
+      ```

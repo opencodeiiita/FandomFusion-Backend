@@ -4,6 +4,8 @@ import Game from '../models/game.model.js';
 import Movie from '../models/movie.model.js';
 import User from '../models/user.model.js';
 import mongoose from 'mongoose';
+import axios from 'axios';
+import { formatAnimeListResponse } from '../utils/responseFormatters.js';
 
 export const addAnimeToList = async (req, res) => {
     const { publicDbId, status, rating } = req.body;
@@ -392,4 +394,52 @@ export const removeMovieFromList = async (req, res) => {
     console.error('Error removing movie from list:', error);
     res.status(500).json({ error: 'An internal server error occurred.' });
   }
+};
+
+// Function to fetch user's anime list
+export const getAnimeList = async (req, res) => {
+    try {
+
+        //Retrieve user's animeList from the database
+        const userId = req.user.id;
+        const animeList = await AnimeList.findOne({ user: userId });
+
+        if (!animeList) {
+            return res.status(404).json({ error: "No anime list found for this user." });
+        }
+
+        const animeEntries = animeList.animeEntries;
+
+        const enrichedAnimeList = await Promise.all(
+          animeEntries.map(async (animeId) => {
+              // Populate the Anime document referenced by the animeId
+              const animeEntry = await Anime.findById(animeId);
+      
+              if (!animeEntry) {
+                  throw new Error(`Anime entry with ID ${animeId} not found`);
+              }
+              
+      
+              const { publicDbId, status, rating } = animeEntry;
+                   
+              // Fetch detailed info from Jikan API
+              const jikanResponse = await axios.get(`https://api.jikan.moe/v4/anime/${publicDbId}`);       
+              const jikanData = jikanResponse.data?.data;
+      
+              if (!jikanData) {
+                  throw new Error(`Failed to fetch data for anime ID ${publicDbId}`);
+              }
+      
+              // Combine Jikan API response with database fields
+              return formatAnimeListResponse(jikanData, { status, rating });
+          })
+      );
+      
+
+        //Return the enriched and formatted data
+        return res.status(200).json({ animeList: enrichedAnimeList });
+    } catch (error) {
+        console.error("Error in getAnimeList:", error.message);
+        return res.status(500).json({ error: "An error occurred while fetching the anime list." });
+    }
 };
