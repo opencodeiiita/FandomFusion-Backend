@@ -403,25 +403,30 @@ An error response from the server will look like this:
 - **Method:** `POST`
 - **Request Body:** 
   ```json
-    {
-      "publicDbId": "string",
-      "status": "string",
-      "rating": "number"
-    }
+   {
+  "status": "OK",
+  "message": "Game added successfully to the list.",
+  "data": {
+    "publicDbId": 12345,
+    "status": "Action",
+    "rating": 4.5
+  }
+}
     ```
 **Success Response:**
 - **Status Code:** `201 created`
 - **Response Body:**
   ```json
-    {
-      "status": "OK",
-      "message": "Game added successfully to the list.",
-      "data": {
-          "publicDbId": "string",
-          "status": "string",
-          "rating": "number"
-      }
-    }
+   {
+  "message": "Game updated successfully.",
+  "data": {
+    "_id": "ObjectId",
+    "publicDbId": 12345,
+    "status": "Adventure",
+    "rating": 4.5,
+    "__v": 0
+  }
+}
   ```
 
 **Error Responses:**
