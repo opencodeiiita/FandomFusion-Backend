@@ -406,12 +406,7 @@ An error response from the server will look like this:
    {
   "status": "OK",
   "message": "Game added successfully to the list.",
-  "data": {
-    "publicDbId": 12345,
-    "status": "Action",
-    "rating": 4.5
-  }
-}
+   }
     ```
 **Success Response:**
 - **Status Code:** `201 created`
@@ -426,7 +421,7 @@ An error response from the server will look like this:
     "rating": 4.5,
     "__v": 0
   }
-}
+  }
   ```
 
 **Error Responses:**
@@ -521,6 +516,45 @@ An error response from the server will look like this:
       "error": "Game not found in your list."
     }
     ```
+
+### Search Game
+ -**Endpoint:**`/api/v1/media/game/search`
+ - **Method:** `GET`
+- **Request Body:** `None`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+   {
+  "status": "success",
+  "data": [
+    {
+      "publicDbId": 12345,
+      "title": "Game Name",
+      "releasedDate": "2024-01-01",
+      "imgUrl": "https://example.com/image.jpg",
+      "score": 4.5,
+      "genres": ["Action", "Adventure"],
+      "platforms": ["PC", "PlayStation"]
+    }
+  ]
+  }
+
+    ```
+**Error Responses:**
+
+1. **Game not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+    ```json
+  {
+  "status": "error",
+  "message": "Invalid or missing search query."
+   }
+
+
+```
 
 ## Movie List EndPoints
 
