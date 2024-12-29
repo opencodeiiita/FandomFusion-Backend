@@ -857,6 +857,43 @@ An error response from the server will look like this:
         "details": "error details/fetch response"
       }
      ```
+  ### Search Game
+ **Endpoint:**`/api/v1/media/game/search?search={query_string}`
+ - **Method:** `GET`
+- **Request Body:** `None`
+
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+   {
+  "status": "success",
+  "data": [
+    {
+      "publicDbId": 12345,
+      "title": "Game Name",
+      "releasedDate": "2024-01-01",
+      "imgUrl": "https://example.com/image.jpg",
+      "score": 4.5,
+      "genres": ["Action", "Adventure"],
+      "platforms": ["PC", "PlayStation"]
+    }
+  ]
+  }
+**Error Responses:**
+
+1. **Game not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+  ```json
+  {
+  "status": "error",
+  "message": "Invalid or missing search query."
+   }
+
+
+```
 
 ### Get Anime List
 - **Endpoint:** `/api/v1/list/anime`
