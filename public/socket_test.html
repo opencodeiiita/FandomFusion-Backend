@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friend Request Real-Time Test</title>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Friend Request Notifications</h1>
+
+  <!-- Form for userId and token -->
+  <form id="connection-form">
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" placeholder="Enter your user ID" required />
+    <button type="submit">Connect</button>
+  </form>
+
+  <hr />
+
+  <!-- Form for sending friend requests -->
+  <form id="friend-request-form">
+    <label for="username">Send Friend Request to:</label>
+    <input type="text" id="username" placeholder="Recipient's username" required />
+    
+    <label for="token">Your Token:</label>
+    <input type="text" id="token" placeholder="Your Auth Token" required />
+    
+    <button type="submit">Send Request</button>
+  </form>
+
+  <h2>Notifications</h2>
+  <div id="notifications"></div>
+
+  <h2>Friend Requests</h2>
+  <div id="friend-requests"></div>
+
+  <script>
+    const socket = io("http://localhost:4000"); // Adjust the URL if needed
+    let userId;
+
+    // Handle connection form submission
+    document.getElementById("connection-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      userId = document.getElementById("userId").value;
+
+      if (userId) {
+        socket.emit("register", userId); // Register the user ID for real-time communication
+        alert(`Connected as User ID: ${userId}`);
+      }
+    });
+
+    // Listen for friend request events
+    socket.on("friendRequestReceived", (data) => {
+      const friendRequestsDiv = document.getElementById("friend-requests");
+
+      const requestDiv = document.createElement("div");
+      requestDiv.innerHTML = `
+        <p>Friend Request from <strong>${data.sender.username}</strong></p>
+        <button onclick="respondToRequest('${data.sender.username}', 'accept')">Accept</button>
+        <button onclick="respondToRequest('${data.sender.username}', 'reject')">Reject</button>
+      `;
+      friendRequestsDiv.appendChild(requestDiv);
+    });
+
+    socket.on("friendRequestResponded", (data) => {
+      const notifications = document.getElementById("notifications");
+      const div = document.createElement("div");
+      div.textContent = `${data.message}`;
+      notifications.appendChild(div);
+    });
+
+    // Handle friend request form submission
+    document.getElementById("friend-request-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const token = document.getElementById("token").value;
+
+      if (!username || !token) {
+        alert("Please fill in both username and token fields.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:4000/api/v1/user/friend-requests", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ recipientUserName: username }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert(`Friend request sent to ${username}`);
+        } else {
+          alert(`Error: ${result.message}`);
+        }
+      } catch (error) {
+        console.error("Error sending friend request:", error);
+        alert("Failed to send the friend request. Check the console for more details.");
+      }
+    });
+
+    // Function to handle responding to a friend request
+    async function respondToRequest(username, action) {
+      const token = document.getElementById("token").value;
+
+      if (!token) {
+        alert("Please provide your token.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:4000/api/v1/user/friend-requests/respond", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ username, action }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert(`Friend request ${action}ed.`);
+          // Optionally, remove the request from the UI
+          const friendRequestsDiv = document.getElementById("friend-requests");
+          friendRequestsDiv.innerHTML = ""; // Clear for simplicity, you can update specific entries
+        } else {
+          alert(`Error: ${result.message}`);
+        }
+      } catch (error) {
+        console.error(`Error responding to friend request (${action}):`, error);
+        alert("Failed to respond to the friend request. Check the console for more details.");
+      }
+    }
+  </script>
+</body>
+</html>

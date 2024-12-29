@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dbURL from "./src/config/db.config.js";
+import http from "http"; // For creating HTTP server
+import { initializeSocket } from "./src/config/socket.js"; // Import socket config
 
 import userAuthRoutes from "./src/routes/v1/userAuth.routes.js";
 import userRoutes from "./src/routes/v1/user.routes.js";
@@ -12,6 +14,11 @@ import mediaRoutes from "./src/routes/v1/media.routes.js";
 
 dotenv.config();
 const app = express();
+const server = http.createServer(app); // Create HTTP server
+
+// Initialize Socket.IO
+initializeSocket(server);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -27,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}! 🚀`);
 });
 

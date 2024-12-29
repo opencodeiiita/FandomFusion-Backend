@@ -152,7 +152,7 @@ An error response from the server will look like this:
 
 ### Get Data
 
-- **Endpoint:** `/api/v1/user/:id`
+- **Endpoint:** `/api/v1/user/getUser/:id`
 - **Method:** `GET`
 - **Request Body:** `Not Required`
 
@@ -268,6 +268,156 @@ An error response from the server will look like this:
        "error": "Image upload failed"
      }
      ```
+
+### Send Friend Request
+
+- **Endpoint:** `/api/v1/user/friend-requests`
+- **Method:** `POST`
+- **Request Body:** `Authentication token is required`
+  ```json
+    {
+      "recipientUserName": "<--Username-->"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Friend request sent.",
+    "friendRequest": {
+        "sender": "67715b35bf4c31af89303a99",
+        "recipient": "67715b3dbf4c31af89303a9d",
+        "status": "pending",
+        "_id": "67718d707248670961fb10a5",
+        "createdAt": "2024-12-29T17:57:04.455Z",
+        "updatedAt": "2024-12-29T17:57:04.455Z",
+        "__v": 0
+    }
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+
+2. **Friend request already sent:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "message": "Friend request already sent."
+     }
+     ```
+
+3. **Recipient not found**
+   - **Status Code:** `404 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "message": "Recipient not found."
+     }
+     ```
+
+4. **Recipient is already a friend:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "message": "Recipient is already a friend."
+     }
+     ```
+
+### Respond to a Friend Request
+
+- **Endpoint:** `/api/v1/user/friend-requests/respond`
+- **Method:** `POST`
+- **Request Body:** `Authentication token is required`
+  ```json
+    {
+      "username": "<--SenderUsername-->",
+      "action": "{accept/reject} <NOTE: Anything other than accept is treated as reject>"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Friend request {action}ed."
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+
+2. **Friend request not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "error": "Friend request not found."
+     }
+     ```
+
+### Get Friend Requests
+
+- **Endpoint:** `/api/v1/user/friend-requests`
+- **Method:** `GET`
+- **Request Body:** `Authentication token is required, No body`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "friendRequests": [
+        {
+            "_id": "6771901b7248670961fb10cf",
+            "sender": {
+                "_id": "67715b35bf4c31af89303a99",
+                "username": "User1",
+                "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+            },
+            "recipient": "67715b3dbf4c31af89303a9d",
+            "status": "pending",
+            "createdAt": "2024-12-29T18:08:27.693Z",
+            "updatedAt": "2024-12-29T18:08:27.693Z",
+            "__v": 0
+        }
+    ]
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+     
 
 ## Anime List EndPoints
 
