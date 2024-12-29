@@ -1,5 +1,5 @@
 import { formatAnimeResponse, formatGameSearchResponse } from "../utils/responseFormatters.js";
-const axios = require('axios');
+import axios from "axios";
 
 export const searchAnime = async (req, res) => {
     const query = req.query.q;
