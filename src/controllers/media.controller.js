@@ -1,4 +1,5 @@
-import { formatAnimeResponse } from "../utils/responseFormatters.js";
+import { formatAnimeResponse, formatGameSearchResponse } from "../utils/responseFormatters.js";
+import axios from "axios";
 
 export const searchAnime = async (req, res) => {
     const query = req.query.q;
@@ -29,4 +30,38 @@ export const searchAnime = async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: 'Failed to fetch data from Jikan API', details: error.message });
     }
+};
+
+// media.controller.js
+
+
+export const searchGame = async (req, res, next) => {
+  try {
+    const searchQuery = req.query.search;
+    const response = await axios.get(`${process.env.RAWG_URL}/games`, {
+      params: {
+        key: process.env.RAWG_KEY,
+        search: searchQuery,
+        page_size: 10 // You can adjust the page size as needed
+      }
+    });
+
+    const formattedResponse = formatGameSearchResponse(response.data.results);
+    res.status(200).json({
+      status: 'success',
+      data: formattedResponse
+    });
+  } catch (error) {
+    if (error.response && error.response.data) {
+      // RAWG API error or no results
+      return res.status(error.response.status || 500).json({
+        status: 'error',
+        message: error.response.data.detail || 'Something went wrong!'
+      });
+    }
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error'
+    });
+  }
 };

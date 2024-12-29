@@ -33,3 +33,18 @@ export const formatAnimeListResponse = (response, userEntry) => {
         userRating: userEntry.rating, // Added user-defined rating
     };
 };
+
+// utils/responseFormatter.js
+
+export const formatGameSearchResponse = (data) => {
+    return data.map((game) => ({
+      publicDbId: game.id,
+      title: game.name,
+      releasedDate: game.released,
+      imgUrl: game.background_image,
+      score: game.rating,
+      genre: game.genres.map(genre => genre.name),
+      platforms: game.platforms.map(platform => platform.name)
+    }));
+  };
+  
