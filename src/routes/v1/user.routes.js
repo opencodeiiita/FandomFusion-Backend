@@ -2,6 +2,7 @@ import express from 'express';
 import upload from '../../middlewares/upload.middleware.js';
 import userAuthMiddleware from '../../middlewares/userAuth.middleware.js';
 import { updateProfile, getUserById } from '../../controllers/userProfile.controller.js';
+import { sendFriendRequest, getFriendRequests, respondToFriendRequest } from '../../controllers/friendRequest.controller.js';
 
 const router = express.Router();
 
@@ -9,6 +10,10 @@ const router = express.Router();
 router.patch('/profile', userAuthMiddleware, upload.single('profileImg'), updateProfile);
 
 // Get user details by ID
-router.get('/:id', userAuthMiddleware, getUserById);
+router.get('/getUser/:id', userAuthMiddleware, getUserById);
+
+router.post('/friend-requests', userAuthMiddleware, sendFriendRequest);
+router.get('/friend-requests', userAuthMiddleware, getFriendRequests);
+router.post('/friend-requests/respond', userAuthMiddleware, respondToFriendRequest);
 
 export default router;

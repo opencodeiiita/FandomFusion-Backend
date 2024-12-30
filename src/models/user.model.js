@@ -35,7 +35,8 @@ const userSchema = new mongoose.Schema({
   profileImg: { 
     type: String, 
     default: 'https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png'//Default pic
-  }
+  },
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] // Add this field
 });
 
 const User = mongoose.model('User', userSchema);  
