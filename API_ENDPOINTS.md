@@ -972,3 +972,80 @@ An error response from the server will look like this:
         "message": "Unauthorized: Invalid or expired token"
       }
       ```
+<<<<<<< HEAD
+
+# API Endpoints
+
+## Media Endpoints
+
+### 1. **Get Top Anime**
+**Endpoint:**
+```
+GET /api/v1/media/anime/top
+```
+
+**Description:**
+Fetches the top anime data from the Jikan API.
+
+**Query Parameters:**
+| Parameter | Type   | Required | Description                        |
+|-----------|--------|----------|------------------------------------|
+| `page`    | Number | No       | Specifies the page number (default: 1). |
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "publicDbId": 38000,
+      "imageUrl": "https://cdn.myanimelist.net/images/anime/1286/99889l.jpg",
+      "titleEnglish": "Demon Slayer: Kimetsu no Yaiba",
+      "titleJapanese": "\u9b3c\u6ec5\u306e\u5203",
+      "episodes": 26,
+      "status": "Finished Airing",
+      "score": 8.45,
+      "synopsis": "Ever since the death of his father...",
+      "rated": "R - 17+ (violence & profanity)",
+      "season": "spring",
+      "year": 2019,
+      "type": "anime",
+      "rank": "12"
+    }
+  ]
+}
+```
+
+**Error Responses:**
+| Status Code | Message                  |
+|-------------|--------------------------|
+| 404         | "No data found"         |
+| 500         | "Internal Server Error" |
+
+**Example Request:**
+```
+GET /api/v1/media/anime/top?page=1
+```
+
+**Example Response:**
+```json
+{
+  "data": [
+    {
+      "publicDbId": 38000,
+      "imageUrl": "https://cdn.myanimelist.net/images/anime/1286/99889l.jpg",
+      "titleEnglish": "Demon Slayer: Kimetsu no Yaiba",
+      "titleJapanese": "\u9b3c\u6ec5\u306e\u5203",
+      "episodes": 26,
+      "status": "Finished Airing",
+      "score": 8.45,
+      "synopsis": "Ever since the death of his father...",
+      "rated": "R - 17+ (violence & profanity)",
+      "season": "spring",
+      "year": 2019,
+      "type": "anime",
+      "rank": "12"
+    }
+  ]
+}
+=======
+>>>>>>> 7ef4b20cbf28ccda035bcb854b087634e562778a

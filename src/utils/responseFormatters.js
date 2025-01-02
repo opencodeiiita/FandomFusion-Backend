@@ -48,3 +48,22 @@ export const formatGameSearchResponse = (data) => {
     }));
   };
   
+
+  export const formatTopAnimeResponse = (animeList) => {
+    return animeList.map((anime) => ({
+      publicDbId: anime.mal_id,
+      imageUrl: anime.images?.jpg?.large_image_url || '',
+      titleEnglish: anime.title_english || anime.title,
+      titleJapanese: anime.title_japanese || '',
+      episodes: anime.episodes || 'Unknown',
+      status: anime.status || 'Unknown',
+      score: anime.score || 'N/A',
+      synopsis: anime.synopsis || 'No synopsis available.',
+      rated: anime.rating || 'Unrated',
+      season: anime.season || 'Unknown',
+      year: anime.year || 'Unknown',
+      type: 'anime',
+      rank: anime.rank || 'Unranked',
+    }));
+  };
+  
