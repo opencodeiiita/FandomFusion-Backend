@@ -152,7 +152,7 @@ An error response from the server will look like this:
 
 ### Get Data
 
-- **Endpoint:** `/api/v1/user/:id`
+- **Endpoint:** `/api/v1/user/getUser/:id`
 - **Method:** `GET`
 - **Request Body:** `Not Required`
 
@@ -268,6 +268,156 @@ An error response from the server will look like this:
        "error": "Image upload failed"
      }
      ```
+
+### Send Friend Request
+
+- **Endpoint:** `/api/v1/user/friend-requests`
+- **Method:** `POST`
+- **Request Body:** `Authentication token is required`
+  ```json
+    {
+      "recipientUserName": "<--Username-->"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Friend request sent.",
+    "friendRequest": {
+        "sender": "67715b35bf4c31af89303a99",
+        "recipient": "67715b3dbf4c31af89303a9d",
+        "status": "pending",
+        "_id": "67718d707248670961fb10a5",
+        "createdAt": "2024-12-29T17:57:04.455Z",
+        "updatedAt": "2024-12-29T17:57:04.455Z",
+        "__v": 0
+    }
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+
+2. **Friend request already sent:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "message": "Friend request already sent."
+     }
+     ```
+
+3. **Recipient not found**
+   - **Status Code:** `404 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "message": "Recipient not found."
+     }
+     ```
+
+4. **Recipient is already a friend:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "message": "Recipient is already a friend."
+     }
+     ```
+
+### Respond to a Friend Request
+
+- **Endpoint:** `/api/v1/user/friend-requests/respond`
+- **Method:** `POST`
+- **Request Body:** `Authentication token is required`
+  ```json
+    {
+      "username": "<--SenderUsername-->",
+      "action": "{accept/reject} <NOTE: Anything other than accept is treated as reject>"
+    }
+    ```
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "message": "Friend request {action}ed."
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+
+2. **Friend request not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "error": "Friend request not found."
+     }
+     ```
+
+### Get Friend Requests
+
+- **Endpoint:** `/api/v1/user/friend-requests`
+- **Method:** `GET`
+- **Request Body:** `Authentication token is required, No body`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "friendRequests": [
+        {
+            "_id": "6771901b7248670961fb10cf",
+            "sender": {
+                "_id": "67715b35bf4c31af89303a99",
+                "username": "User1",
+                "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+            },
+            "recipient": "67715b3dbf4c31af89303a9d",
+            "status": "pending",
+            "createdAt": "2024-12-29T18:08:27.693Z",
+            "updatedAt": "2024-12-29T18:08:27.693Z",
+            "__v": 0
+        }
+    ]
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+     
 
 ## Anime List EndPoints
 
@@ -403,25 +553,25 @@ An error response from the server will look like this:
 - **Method:** `POST`
 - **Request Body:** 
   ```json
-   {
-  "status": "OK",
-  "message": "Game added successfully to the list.",
-   }
+    {
+      "publicDbId": "string",
+      "status": "string",
+      "rating": "number"
+    }
     ```
 **Success Response:**
 - **Status Code:** `201 created`
 - **Response Body:**
   ```json
-   {
-  "message": "Game updated successfully.",
-  "data": {
-    "_id": "ObjectId",
-    "publicDbId": 12345,
-    "status": "Adventure",
-    "rating": 4.5,
-    "__v": 0
-  }
-  }
+    {
+      "status": "OK",
+      "message": "Game added successfully to the list.",
+      "data": {
+          "publicDbId": "string",
+          "status": "string",
+          "rating": "number"
+      }
+    }
   ```
 
 **Error Responses:**
@@ -516,45 +666,6 @@ An error response from the server will look like this:
       "error": "Game not found in your list."
     }
     ```
-
-### Search Game
- -**Endpoint:**`/api/v1/media/game/search`
- - **Method:** `GET`
-- **Request Body:** `None`
-
-**Success Response:**
-- **Status Code:** `200 OK`
-- **Response Body:**
-  ```json
-   {
-  "status": "success",
-  "data": [
-    {
-      "publicDbId": 12345,
-      "title": "Game Name",
-      "releasedDate": "2024-01-01",
-      "imgUrl": "https://example.com/image.jpg",
-      "score": 4.5,
-      "genres": ["Action", "Adventure"],
-      "platforms": ["PC", "PlayStation"]
-    }
-  ]
-  }
-
-    ```
-**Error Responses:**
-
-1. **Game not found:**
-   - **Status Code:** `400 Bad Request`
-   - **Response Body:**
-    ```json
-  {
-  "status": "error",
-  "message": "Invalid or missing search query."
-   }
-
-
-```
 
 ## Movie List EndPoints
 
@@ -746,6 +857,43 @@ An error response from the server will look like this:
         "details": "error details/fetch response"
       }
      ```
+  ### Search Game
+ **Endpoint:**`/api/v1/media/game/search?search={query_string}`
+ - **Method:** `GET`
+- **Request Body:** `None`
+
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+   {
+  "status": "success",
+  "data": [
+    {
+      "publicDbId": 12345,
+      "title": "Game Name",
+      "releasedDate": "2024-01-01",
+      "imgUrl": "https://example.com/image.jpg",
+      "score": 4.5,
+      "genres": ["Action", "Adventure"],
+      "platforms": ["PC", "PlayStation"]
+    }
+  ]
+  }
+**Error Responses:**
+
+1. **Game not found:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+  ```json
+  {
+  "status": "error",
+  "message": "Invalid or missing search query."
+   }
+
+
+```
 
 ### Get Anime List
 - **Endpoint:** `/api/v1/list/anime`
@@ -824,6 +972,7 @@ An error response from the server will look like this:
         "message": "Unauthorized: Invalid or expired token"
       }
       ```
+<<<<<<< HEAD
 
 # API Endpoints
 
@@ -898,3 +1047,5 @@ GET /api/v1/media/anime/top?page=1
     }
   ]
 }
+=======
+>>>>>>> 7ef4b20cbf28ccda035bcb854b087634e562778a
