@@ -70,7 +70,7 @@ export const topAnime = async (req, res) => {
   const page = req.query.page || 1;
 
   try {
-    const response = await axios.get(`${process.env.JIKAN_URL}`, {
+    const response = await axios.get(`${process.env.JIKAN_URL}/top/anime`, {
       params: { page },
     });
 
