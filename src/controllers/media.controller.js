@@ -1,4 +1,4 @@
-import { formatAnimeResponse, formatGameSearchResponse } from "../utils/responseFormatters.js";
+import { formatAnimeResponse, formatGameSearchResponse ,formatTopAnimeResponse} from "../utils/responseFormatters.js";
 import axios from "axios";
 
 export const searchAnime = async (req, res) => {
@@ -63,5 +63,30 @@ export const searchGame = async (req, res, next) => {
       status: 'error',
       message: 'Internal server error'
     });
+  }
+};
+
+export const topAnime = async (req, res) => {
+  const page = req.query.page || 1;
+
+  try {
+    const response = await axios.get(`${process.env.JIKAN_URL}`, {
+      params: { page },
+    });
+
+    if (!response.data || !response.data.data) {
+      return res.status(404).json({ message: 'No data found' });
+    }
+
+    const formattedData = formatTopAnimeResponse(response.data.data);
+
+    res.status(200).json({ data: formattedData });
+  } catch (error) {
+    if (error.response) {
+      return res
+        .status(error.response.status)
+        .json({ message: error.response.data.message || 'API Error' });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
