@@ -419,6 +419,153 @@ An error response from the server will look like this:
      ```
      
 
+## Chat Endpoints
+
+### Send message
+
+- **Endpoint:** `/api/v1/chat/send`
+- **Method:** `POST`
+- **Request Body:**
+  ```json
+  {
+    "recipientId": "string",
+    "content" : "string"
+  }
+  ```
+
+**Success Response:**
+- **Status Code:** `200 Ok`
+- **Response Body:**
+  ```json
+  {
+    "message": "Message sent.",
+    "chatMessage": {
+        "sender": "677bc222e5768c727b1c8720",
+        "recipient": "677bc265e5768c727b1c8725",
+        "content": "Heyyyyyy",
+        "_id": "677bdb02e9499ec4c6c76dcd",
+        "createdAt": "2025-01-06T13:30:42.264Z",
+        "updatedAt": "2025-01-06T13:30:42.264Z",
+        "__v": 0
+    }
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+
+2. **Insufficient Input:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+        "message": "Recipient and content are required."
+     }
+     ```
+
+3. **Invalid Recipient Id:**
+   - **Status Code:** `500 Internal Server Error`
+   - **Response Body:**
+     ```json
+     {
+        "message": "Failed to send message.",
+        "error": "ChatMessage validation failed: recipient: Cast to ObjectId failed for value \"677bcaa265e5768c727b1c8725\" (type string) at path \"recipient\" because of \"BSONError\""
+     }
+     ```
+
+### Get Chat History
+
+- **Endpoint:** `/api/v1/chat/history`
+- **Method:** `POST`
+- **Request Body:** `None`
+- **Request query parameters:** `recipientId`
+
+**Success Response:**
+- **Status Code:** `200 Ok`
+- **Response Body:**
+  ```json
+  {
+    "messages": [
+        {
+            "_id": "677bdb02e9499ec4c6c76dcd",
+            "sender": {
+                "_id": "677bc222e5768c727b1c8720",
+                "username": "Demo A",
+                "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+            },
+            "recipient": {
+                "_id": "677bc265e5768c727b1c8725",
+                "username": "Demo B",
+                "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+            },
+            "content": "Heyyyyyy",
+            "createdAt": "2025-01-06T13:30:42.264Z",
+            "updatedAt": "2025-01-06T13:30:42.264Z",
+            "__v": 0
+        },
+        {
+            "_id": "677bdc43e9499ec4c6c76dd0",
+            "sender": {
+                "_id": "677bc265e5768c727b1c8725",
+                "username": "Demo B",
+                "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+            },
+            "recipient": {
+                "_id": "677bc222e5768c727b1c8720",
+                "username": "Demo A",
+                "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+            },
+            "content": "Hie, Myself demo B",
+            "createdAt": "2025-01-06T13:36:03.517Z",
+            "updatedAt": "2025-01-06T13:36:03.517Z",
+            "__v": 0
+        }
+    ]
+  }
+  ```
+
+**Error Responses:**
+
+1. **Invalid token:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Unauthorized: Invalid or expired token"
+     }
+     ```
+
+2. **Wrong query parameter:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+     ```json
+     {
+        "message": "Recipient ID is required."
+     }
+     ```
+
+3. **Invalid Recipient Id:**
+   - **Status Code:** `500 Internal Server Error`
+   - **Response Body:**
+     ```json
+     {
+        "message": "Failed to send message.",
+        "error": "ChatMessage validation failed: recipient: Cast to ObjectId failed for value \"677bcaa265e5768c727b1c8725\" (type string) at path \"recipient\" because of \"BSONError\""
+     }
+     ```
+    
+
+
 ## Anime List EndPoints
 
 ### Add Anime
@@ -891,9 +1038,7 @@ An error response from the server will look like this:
   "status": "error",
   "message": "Invalid or missing search query."
    }
-
-
-```
+  ```
 
 ### Get Anime List
 - **Endpoint:** `/api/v1/list/anime`
@@ -972,11 +1117,6 @@ An error response from the server will look like this:
         "message": "Unauthorized: Invalid or expired token"
       }
       ```
-<<<<<<< HEAD
-
-# API Endpoints
-
-## Media Endpoints
 
 ### 1. **Get Top Anime**
 **Endpoint:**
@@ -1047,5 +1187,3 @@ GET /api/v1/media/anime/top?page=1
     }
   ]
 }
-=======
->>>>>>> 7ef4b20cbf28ccda035bcb854b087634e562778a

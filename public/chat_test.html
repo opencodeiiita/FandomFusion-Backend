@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Test</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Chat Test</h1>
+  <div>
+    <label for="token">Token:</label>
+    <input type="text" id="token" placeholder="Enter your token" />
+    <button id="set-token-button">Set Token</button>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <label for="recipient-id">Recipient ID:</label>
+    <input type="text" id="recipient-id" placeholder="Enter recipient ID" />
+    <button id="set-recipient-button">Set Recipient</button>
+  </div>
+
+  <div id="chat-box" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: auto;">
+    <!-- Messages will appear here -->
+  </div>
+  <div style="margin-top: 10px;">
+    <input type="text" id="message-input" placeholder="Type your message" style="width: 80%;" />
+    <button id="send-button">Send</button>
+  </div>
+
+  <script>
+    const socket = io("http://localhost:4000");
+    let token = null;
+    let recipientId = null;
+
+    // Register user
+    const userId = prompt("Enter your user ID:");
+    socket.emit("register", userId);
+
+    // Set token
+    const setTokenButton = document.getElementById("set-token-button");
+    setTokenButton.addEventListener("click", () => {
+      const tokenInput = document.getElementById("token");
+      token = tokenInput.value.trim();
+      if (token) {
+        alert("Token set successfully.");
+      } else {
+        alert("Please enter a valid token.");
+      }
+    });
+
+    // Set recipient ID
+    const setRecipientButton = document.getElementById("set-recipient-button");
+    setRecipientButton.addEventListener("click", () => {
+      const recipientInput = document.getElementById("recipient-id");
+      recipientId = recipientInput.value.trim();
+      if (recipientId) {
+        alert(`Recipient ID set to: ${recipientId}`);
+      } else {
+        alert("Please enter a valid recipient ID.");
+      }
+    });
+
+    // Listen for messages
+    socket.on("messageReceived", (message) => {
+      const chatBox = document.getElementById("chat-box");
+      const messageDiv = document.createElement("div");
+      messageDiv.textContent = `From ${message.sender}: ${message.content}`;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the latest message
+    });
+
+    // Send messages
+    const sendButton = document.getElementById("send-button");
+    sendButton.addEventListener("click", () => {
+      const messageInput = document.getElementById("message-input");
+      if (!token) {
+        alert("Please set a token before sending a message.");
+        return;
+      }
+      if (!recipientId) {
+        alert("Please set a recipient ID before sending a message.");
+        return;
+      }
+
+      const content = messageInput.value.trim();
+      if (!content) {
+        alert("Please enter a message.");
+        return;
+      }
+
+      fetch("http://localhost:4000/api/v1/chats/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+        body: JSON.stringify({ recipientId, content }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message) {
+            const chatBox = document.getElementById("chat-box");
+            const messageDiv = document.createElement("div");
+            messageDiv.textContent = `You: ${content}`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+          } else {
+            console.error("Failed to send message:", data);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
+
+      messageInput.value = ""; // Clear input field
+    });
+  </script>
+</body>
+</html>

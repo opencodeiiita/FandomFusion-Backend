@@ -83,3 +83,17 @@ To use the socket functionality in a new controller:
         }
     }
     ```
+
+
+### User recieves a chat message
+
+- **Event:** `messageReceived`
+- **Payload:**
+    ```json
+    {
+        "recipient": {
+            "sender": "<senderId>",
+            "content": "<jsonObject>"
+        }
+    }
+    ```
