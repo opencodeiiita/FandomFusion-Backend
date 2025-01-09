@@ -1187,3 +1187,53 @@ GET /api/v1/media/anime/top?page=1
     }
   ]
 }
+```
+
+### Get Game Details
+- **Endpoint:** `/api/v1/media/anime/details`
+- **Method:** `GET`
+- **Request Body:** `Not Required` 
+- **Authentication:** `Required` 
+
+**Success Response:**
+  - **Status Code:** `200 Ok`
+  - **Response Body:**
+    ````json
+    {
+        "data": [
+        {
+        "publicDbId": 12345,
+        "title": "Lamp Head",
+        "releasedDate": "2015-09-29",
+        "imgUrl": "https://media.rawg.io/media/screenshots/216/216f32da89f4be88f4b5a43568e1a67a.jpg",
+        "score": 0,
+        "genre": [
+            "Adventure",
+            "Casual",
+            "Indie"
+        ],
+        "platform": [
+            "PC"
+        ],
+        "description": "The protagonist of this game is a strange man with a lamp instead his head who needs to breach out of the darkened and dangerous odd place at whatever cost. Are you ready to prove that your reaction is outstanding, shunting between sharp barriers, collecting bonuses, remembering that in the end of every dark path the light of victory awaits?\nThe game was present on Poket Game Conference in Helsinki\non event Very Big INDIE Pitch! Top 1 in more than 20 countries on Windows Platform. Support this game and enjoy our indie game!\n* Get battery to light your way\n* Collect coins to save him!\n* Adorable sound effects\n* Challenge and help your friends!\n* Added more New Location,\n* Added more cute cartoon characters",
+        "rated": "Not Rated"
+  
+        }
+        ]
+        }
+        ```
+
+   **Error Responses:**
+
+   **Invalid Game Id:**
+   - **Status Code:** `400`
+   - **Response Body:**
+    ```json
+    {
+      "status": "error",
+      "message": "Invalid Id"
+    }
+    ```
+
+
+

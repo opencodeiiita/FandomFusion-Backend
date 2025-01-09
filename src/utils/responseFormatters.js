@@ -66,4 +66,19 @@ export const formatGameSearchResponse = (data) => {
       rank: anime.rank || 'Unranked',
     }));
   };
+
+  export const formatGameDetailsResponse = (data) => {
+    return {
+      publicDbId: data.id,
+      title: data.name,
+      releasedDate: data.released,
+      imgUrl: data.background_image,
+      score: data.rating,
+      genre: data.genres.map((genre) => genre.name),
+      platform: data.platforms.map((platform) => platform.platform.name),
+      description: data.description_raw,
+      rated: data.esrb_rating?.name || 'Not Rated',
+    };
+  };
+  
   

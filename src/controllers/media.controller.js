@@ -1,4 +1,4 @@
-import { formatAnimeResponse, formatGameSearchResponse ,formatTopAnimeResponse} from "../utils/responseFormatters.js";
+import { formatAnimeResponse, formatGameSearchResponse ,formatTopAnimeResponse,formatGameDetailsResponse} from "../utils/responseFormatters.js";
 import axios from "axios";
 
 export const searchAnime = async (req, res) => {
@@ -90,3 +90,23 @@ export const topAnime = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+export const getGameDetails = async (req, res) => {
+  const {id} = req.params;
+
+  try {
+    const response = await axios.get(`${process.env.RAWG_URL}/games/${id}?key=${process.env.RAWG_KEY}`);
+    const formattedData = formatGameDetailsResponse(response.data);
+    res.status(200).json({
+      status: 'success',
+      data: formattedData,
+    });
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Invalid Id';
+    res.status(400).json({
+      status: 'error',
+      message: errorMessage,
+    });
+  }
+};
+
