@@ -1190,7 +1190,7 @@ GET /api/v1/media/anime/top?page=1
 ```
 
 ### Get Game Details
-- **Endpoint:** `/api/v1/media/anime/details`
+- **Endpoint:** `/api/v1/media/game/details`
 - **Method:** `GET`
 - **Request Body:** `Not Required` 
 - **Authentication:** `Required` 

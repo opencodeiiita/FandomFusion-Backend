@@ -7,5 +7,5 @@ const router = express.Router();
 router.get('/anime/top', topAnime);
 router.get('/anime/search', userAuthMiddleware, searchAnime);
 router.get('/game/search', userAuthMiddleware, searchGame);
-router.get('/anime/details/:id', userAuthMiddleware, getGameDetails);
+router.get('/game/details/:id', userAuthMiddleware, getGameDetails);
 export default router;
