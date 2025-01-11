@@ -12,8 +12,10 @@ router.patch('/profile', userAuthMiddleware, upload.single('profileImg'), update
 // Get user details by ID
 router.get('/getUser/:id', userAuthMiddleware, getUserById);
 
+
 router.post('/friend-requests', userAuthMiddleware, sendFriendRequest);
 router.get('/friend-requests', userAuthMiddleware, getFriendRequests);
 router.post('/friend-requests/respond', userAuthMiddleware, respondToFriendRequest);
+
 
 export default router;

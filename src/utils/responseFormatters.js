@@ -80,5 +80,23 @@ export const formatGameSearchResponse = (data) => {
       rated: data.esrb_rating?.name || 'Not Rated',
     };
   };
+
+
+  export const formatGameListResponse = (rawgData, status, rating) => {
+    return {
+      publicDbId: rawgData.id,
+      title: rawgData.name,
+      releasedDate: rawgData.released,
+      imgUrl: rawgData.background_image,
+      score: rawgData.rating,
+      genre: rawgData.genres.map((genre) => genre.name),
+      platform: rawgData.platforms.map((platform) => platform.platform.name),
+      description: rawgData.description_raw,
+      rated: rawgData.esrb_rating?.name || 'Not Rated',
+      status, 
+      rating,
+    };
+  };
+  
   
   

@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import userAuthMiddleware from '../../middlewares/userAuth.middleware.js';
-import { addAnimeToList, addGameToList, addMovieToList } from '../../controllers/userLists.controller.js';
+import { addAnimeToList, addGameToList, addMovieToList,getGameList } from '../../controllers/userLists.controller.js';
 import {
     updateAnimeInList,
     updateGameInList,
@@ -29,5 +29,7 @@ router.delete('/movies/remove/:id', userAuthMiddleware, removeMovieFromList);
 
 //Get anime list of a user
 router.get('/anime', userAuthMiddleware, getAnimeList);
+router.get('/game', userAuthMiddleware, getGameList);
+
 
 export default router;
