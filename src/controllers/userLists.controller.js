@@ -5,7 +5,7 @@ import Movie from '../models/movie.model.js';
 import User from '../models/user.model.js';
 import mongoose from 'mongoose';
 import axios from 'axios';
-import { formatAnimeListResponse } from '../utils/responseFormatters.js';
+import { formatAnimeListResponse,formatGameListResponse } from '../utils/responseFormatters.js';
 
 export const addAnimeToList = async (req, res) => {
     const { publicDbId, status, rating } = req.body;
@@ -445,3 +445,63 @@ export const getAnimeList = async (req, res) => {
          });
     }
 };
+
+
+export const getGameList = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate({
+      path: 'gameList',
+      populate: {
+        path: 'gameEntries',
+        select: 'publicDbId status rating'
+      }
+    });
+
+    if (!user || !user.gameList || !Array.isArray(user.gameList.gameEntries)) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Game list not found or invalid.'
+      });
+    }
+
+    const gameEntries = user.gameList.gameEntries;
+
+    const enrichedGameList = await Promise.all(
+      gameEntries.map(async (game) => {
+        try {
+          const rawgResponse = await axios.get(
+            `${process.env.RAWG_URL}/games/${game.publicDbId}?key=${process.env.RAWG_KEY}`
+          );
+          const formattedGame = formatGameListResponse(rawgResponse.data);
+
+          return {
+            ...formattedGame,
+            status: game.status,
+            rating: game.rating
+          };
+        } catch (error) {
+          console.error(`Error fetching game details for ID ${game.publicDbId}:`, error.message);
+          return null; 
+        }
+      })
+    );
+
+    
+    res.status(200).json({
+      status: 'success',
+      data: {
+        gameList: enrichedGameList.filter((game) => game !== null)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while fetching the game list.',
+      error: error.message
+    });
+  }
+};
+
+
+
+
