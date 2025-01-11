@@ -418,6 +418,73 @@ An error response from the server will look like this:
      }
      ```
      
+### Get Users
+
+- **Endpoint:** `/api/v1/user/search`
+- **Method:** `GET`
+- **Request Body:** `Authentication token is required, No body`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json 
+    {
+    "status": "success",
+    "data": [
+        {
+            "_id": "6782db476a772dd90e46c219",
+            "username": "Snehal Gupta",
+            "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+        }
+    ]
+    }
+  ```
+  **Error Responses:**
+
+1. **Invalid User:**
+   - **Status Code:** `500`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "Server error"
+     }
+     ```
+### Get Friends
+
+- **Endpoint:** `/api/v1/user/friends`
+- **Method:** `GET`
+- **Request Body:** `Authentication token is required, No body`
+
+**Success Response:**
+- **Status Code:** `200 `
+- **Response Body:**
+  ```json 
+   {
+    "status": "success",
+    "data": [
+        {
+            "_id": "6782db476a772dd90e46c219",
+            "username": "Snehal Gupta",
+            "profileImg": "https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png"
+        }
+    ]
+    }
+  ```
+  **Error Responses:**
+
+1. **Invalid User:**
+   - **Status Code:** `404`
+   - **Response Body:**
+     ```json
+     {
+       "status": "error",
+       "error": "User not found"
+     }
+     ```
+
+  
+
 
 ## Chat Endpoints
 
