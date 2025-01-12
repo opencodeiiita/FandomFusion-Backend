@@ -1,5 +1,7 @@
-import { formatAnimeResponse, formatGameSearchResponse ,formatTopAnimeResponse,formatGameDetailsResponse} from "../utils/responseFormatters.js";
+import { formatAnimeResponse, formatGameSearchResponse ,formatTopAnimeResponse,formatGameDetailsResponse,formatMovieResponse,formatMovieDetailsResponse} from "../utils/responseFormatters.js";
 import axios from "axios";
+import { MovieList } from '../models/list.model.js';
+
 
 export const searchAnime = async (req, res) => {
     const query = req.query.q;
@@ -109,4 +111,99 @@ export const getGameDetails = async (req, res) => {
     });
   }
 };
+
+
+
+export const searchMovies = async (req, res) => {
+  try {
+    const { search } = req.query;
+
+    if (!search) {
+      return res.status(400).json({
+        status: "error",
+        message: "Search term is required",
+      });
+    }
+
+    const tmdbResponse = await axios.get(`${process.env.TMDB_URL}/search/movie`, {
+      headers: {
+        Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
+        Accept: 'application/json',
+      },
+      params: {
+        query: search,
+      },
+    });
+
+    const transformedMovies = tmdbResponse.data.results.map(movie => 
+      formatMovieResponse(movie) 
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: transformedMovies,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to fetch movies",
+    });
+  }
+};
+
+
+
+
+
+export const getMovieList = async (req, res) => {
+  try {
+    
+    console.log('Fetching movie list for user:', req.user.id);
+
+    const movieList = await MovieList.findOne({ user: req.user.id }).populate('movieEntries');
+
+    if (!movieList || !movieList.movieEntries || movieList.movieEntries.length === 0) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'No movies found for this user',
+      });
+    }
+
+   
+    const movieDetailsPromises = movieList.movieEntries.map(movie =>
+      axios.get(`${process.env.TMDB_URL}/movie/${movie.publicDbId}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
+          Accept: 'application/json',
+        },
+      })
+    );
+  
+    const movieDetailsResponses = await Promise.all(movieDetailsPromises);
+
+    const mergedData = movieList.movieEntries.map((movie, index) => {
+      const tmdbData = movieDetailsResponses[index].data;
+      return formatMovieDetailsResponse(tmdbData, movie.status, movie.rating); 
+    });
+
+    
+    res.status(200).json({
+      status: 'success',
+      data: mergedData,
+    });
+  } catch (error) {
+    console.error('Error fetching movie list:', error.message);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to fetch movie list',
+    });
+  }
+};
+
+
+
+
+
+
 
