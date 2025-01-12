@@ -97,6 +97,35 @@ export const formatGameSearchResponse = (data) => {
       rating,
     };
   };
+
+  
+export const formatMovieResponse = (movieData) => {
+  return {
+    publicDbId: movieData.id,
+    title: movieData.title,
+    releaseDate: movieData.release_date,
+    score: movieData.vote_average,
+    imgUrl: `https://image.tmdb.org/t/p/original${movieData.poster_path}`,
+    description: movieData.overview,
+    rated: movieData.adult ? 'adult' : 'family friendly',
+  };
+};
+
+export const formatMovieDetailsResponse = (movieData, status, rating) => {
+  return {
+    publicDbId: movieData.id,
+    title: movieData.title,
+    releaseDate: movieData.release_date,
+    score: movieData.vote_average,
+    imgUrl: `https://image.tmdb.org/t/p/original${movieData.poster_path}`,
+    description: movieData.overview,
+    genre: movieData.genres.map((genre) => genre.name),
+    rated: movieData.adult ? 'adult' : 'family friendly',
+    userRating: rating, 
+    userStatus: status,
+  };
+};
+
   
   
   

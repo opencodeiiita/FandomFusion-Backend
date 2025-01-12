@@ -972,6 +972,51 @@ An error response from the server will look like this:
     }
     ```     
 
+
+
+    ### Get Movie List
+- **Endpoint:** `/api/v1/media/movie/list`
+- **Method:** `GET`
+- **Request Body:** `Not Required` 
+- **Authentication:** `Required` 
+
+**Success Response:**
+  - **Status Code:** `200 Ok`
+  - **Response Body:**
+    ````json
+    {
+      "data": [
+        {
+            "publicDbId": 27205,
+            "title": "Inception",
+            "releaseDate": "2010-07-15",
+            "score": 8.37,
+            "imgUrl": "https://image.tmdb.org/t/p/original/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+            "description": "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+            "genre": [
+                "Action",
+                "Science Fiction",
+                "Adventure"
+            ],
+            "rated": "family friendly",
+            "userRating": 8,
+            "userStatus": "Completed"
+      
+        }]
+    }
+    ```
+    **Error Responses:**
+
+   ** Movie list does'nt exist:**
+   - **Status Code:** `500`
+   - **Response Body:**
+    ```json
+    {
+       "status": "error",
+       "message": "Failed to fetch movie list"
+    }
+    ```   
+
 ### Update Movie
 
 - **Endpoint:** `/api/v1/lists/movies/update/:id`
@@ -1155,6 +1200,64 @@ An error response from the server will look like this:
   "message": "Invalid or missing search query."
    }
   ```
+
+  ### Search Movie
+ **Endpoint:**`/api/v1/media/movie/search?search={query_string}`
+ - **Method:** `GET`
+- **Request Body:** `None`
+
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    
+  "status": "success",
+  "data": [
+    {
+      "publicDbId": 12345,
+      "title": "Movie Title",
+      "releaseDate": "2025-01-01",
+      "score": 8.2,
+      "imgUrl": "https://image.tmdb.org/t/p/original/path_to_image.jpg",
+      "description": "Movie overview here.",
+      "genre": ["Action", "Adventure"],
+      "rated": "family friendly",
+      "userRating": 9,
+      "userStatus": "watched"
+    }
+  ]
+  }
+  
+  
+
+  ```
+  **Error Responses:**
+
+1. **No Search term:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+  ```json
+  {
+  "status": "error",
+  "message": "Search term is required"
+   }
+
+2. **Movie not found:**
+   - **Status Code:** `500 Bad Request`
+   - **Response Body:**
+  ```json
+  {
+  "status": "error",
+  "message": "Failed to fetch movies"
+   }
+
+  ```
+
+
+  
+
 
 ### Get Anime List
 - **Endpoint:** `/api/v1/list/anime`
