@@ -12,6 +12,7 @@ import testRoutes from "./src/routes/v1/test.routes.js";
 import userListsRoutes from "./src/routes/v1/userLists.routes.js";
 import mediaRoutes from "./src/routes/v1/media.routes.js";
 import chatRoutes from "./src/routes/v1/chat.routes.js";
+import postRoutes from "./src/routes/v1/post.routes.js";
 
 dotenv.config();
 const app = express();
@@ -30,6 +31,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/lists", userListsRoutes);
 app.use("/api/v1/media", mediaRoutes);
 app.use("/api/v1/chats", chatRoutes);
+app.use("/api/v1/post", postRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World");

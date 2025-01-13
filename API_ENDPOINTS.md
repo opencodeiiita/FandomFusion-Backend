@@ -1502,3 +1502,120 @@ GET /api/v1/media/anime/top?page=1
     }
     ```
 
+
+## Post EndPoints
+
+### Create Post
+- **Endpoint:** `/api/v1/post/create`
+- **Method:** `POST`
+- **Request Body:** 
+    ```json
+    {
+      "publicDbId": "<string>",
+      "type": "<string>",
+      "text": "<string>",
+      "imageUrl": "<string>"
+    }
+    ```
+- **Authentication:** `Required` 
+
+**Success Response:**
+  - **Status Code:** `201 Ok`
+  - **Response Body:**
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "id": "<post_id>",
+        "publicDbId": "<string>",
+        "imageUrl": "<string>",
+        "text": "<string>",
+        "username": "<string>",
+        "userId": "<string>",
+        "profileImg": "<string>",
+        "type": "<string>"
+      }
+    }
+    ```
+
+**Error Responses:**
+
+1. **Missing required fields: publicDbId, type, text, or imageUrl:**
+   - **Status Code:** `400 Bad Request`
+   - **Response Body:**
+      ```json
+      {
+        "status": "error",
+        "message": "Missing required fields: publicDbId, type, text, or imageUrl"
+      }
+      ```
+
+2. **User not found:**
+   - **Status Code:** `404 Not found`
+   - **Response Body:**
+     ```json
+      {
+        "status": "error", 
+        "message": "User not found."
+      }
+     ```
+
+3. **User not authenticated**
+   - **Status Code:** `401 Bad Request`
+   - **Response Body:** `See User Authentication`
+
+4. **Internal error:**
+   - **Status Code:** `500 Bad Request`
+   - **Response Body:**
+      ```json
+      {
+        "status": "error", 
+        "message": "Server error."
+      }
+     ```
+### Get User Posts
+ **Endpoint:**`/api/v1/post/user`
+ - **Method:** `GET`
+- **Request Body:** `None`
+
+**Success Response:**
+- **Status Code:** `200 OK`
+- **Response Body:**
+  ```json
+  {
+    "status": "success",
+    "data": [
+      {
+        "id": "<post_id>",
+        "publicDbId": "<string>",
+        "imageUrl": "<string>",
+        "text": "<string>",
+        "username": "<string>",
+        "userId": "<string>",
+        "profileImg": "<string>",
+        "createdAt": "<string>",
+        "type": "<string>"
+      },
+    ]
+  }
+  ```
+**Error Responses:**
+
+1. **No posts found:**
+   - **Status Code:** `404 Not found`
+   - **Response Body:**
+     ```json
+      {
+        "status": "error", 
+        "message": "No posts found for the user."
+      }
+     ```
+2. **Internal error:**
+   - **Status Code:** `500 Bad Request`
+   - **Response Body:**
+      ```json
+      {
+        "status": "error", 
+        "message": "Server error."
+      }
+     ```
