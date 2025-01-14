@@ -52,3 +52,54 @@ export const getUserPosts = async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Server error' });
   }
 };
+
+
+
+export const getFriendsPosts = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    const { limit = 10 } = req.query;
+
+ 
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: 'error', message: 'User not found' });
+    }
+
+   
+    const friendsPosts = await Post.find({ userId: { $in: user.friends } })
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit))
+      .select('publicDbId imageUrl text username userId profileImg type createdAt');
+
+    res.status(200).json({ status: 'success', data: friendsPosts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+  }
+};
+
+
+export const getGlobalPosts = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { limit = 10 } = req.query;
+
+   
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: 'error', message: 'User not found' });
+    }
+
+   
+    const globalPosts = await Post.find({ userId: { $nin: user.friends } })
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit))
+      .select('publicDbId imageUrl text username userId profileImg type createdAt');
+
+    res.status(200).json({ status: 'success', data: globalPosts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+  }
+};
