@@ -173,6 +173,9 @@ Every contributor is a part of our fandom family. Show off your profile picture 
     </a>
     <a href="https://github.com/HGRgamer" title="HGRgamer">
         <img src="https://github.com/HGRgamer.png" width="70px" style="border-radius: 50%" alt="Kanav Agrawal">
+    </a>  
+    <a href="https://github.com/Snehalgupta-07" title="Snehalgupta-07">
+    <img src="https://github.com/Snehalgupta-07.png" width="70px" style="border-radius: 50%" alt="Snehal Gupta">
     </a>
 
 </div>
