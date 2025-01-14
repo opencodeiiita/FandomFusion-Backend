@@ -171,6 +171,10 @@ Every contributor is a part of our fandom family. Show off your profile picture 
     <a href="https://github.com/Buddha-11" title="Arpit Anand">
         <img src="https://github.com/Buddha-11.png" width="70px" alt="Arpit Anand">
     </a>
+    <a href="https://github.com/HGRgamer" title="HGRgamer">
+        <img src="https://github.com/HGRgamer.png" width="70px" style="border-radius: 50%" alt="Kanav Agrawal">
+    </a>
+
 </div>
 
 Join us and let’s celebrate fandoms together!
