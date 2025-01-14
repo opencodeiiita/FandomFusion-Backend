@@ -13,8 +13,8 @@ import {
   } from '../../controllers/userLists.controller.js';
 
 router.post('/anime/add', userAuthMiddleware, addAnimeToList);
-router.post('/games/add', userAuthMiddleware, addGameToList);
-router.post('/movies/add',userAuthMiddleware, addMovieToList);
+router.post('/game/add', userAuthMiddleware, addGameToList);
+router.post('/movie/add',userAuthMiddleware, addMovieToList);
 
 
 // Update routes
